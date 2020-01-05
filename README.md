@@ -13,7 +13,7 @@ This is an example of a client-only (server-free) donation payment page that can
 
 ## Run locally
 
-Since these are all static assets you can run them locally with a simple web server, e.g.
+Since these are all static assets you can serve them locally with a simple web server, e.g.
 
     python -m SimpleHTTPServer 8888
 
@@ -26,6 +26,6 @@ See demo (in test mode) running here: https://thorsten-stripe.github.io/github-p
 ## Go live
 
 - Add `username.github.io` (replace username with your github user name) to the domain whitelist in https://dashboard.stripe.com/account/checkout/settings
-- Replace the test publishable key `PUBLISHABLE_KEY` in the index.html file with your pk*live_xxx key which can be found here: https://dashboard.stripe.com/test/apikeys (!!!\*\*\_NOTE*\*\*!!!: never paste in your secret key! For client-only Checkout only the publishable key is needed!)
-- Commit the changes to the `gh-pages` and push them to GitHub.
+- Replace the test publishable key `PUBLISHABLE_KEY` in the index.html file with your pk\*live_xxx key which can be found here: https://dashboard.stripe.com/test/apikeys (!!!**NOTE**!!!: never paste in your secret key! For client-only Checkout only the publishable key is needed!)
+- Commit the changes to the `gh-pages` branch and push them to GitHub.
 - Done, you can now accept live payments on your GitHub pages \o/
