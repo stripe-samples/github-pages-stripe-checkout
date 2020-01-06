@@ -29,3 +29,24 @@ See demo (in test mode) running here: https://thorsten-stripe.github.io/github-p
 - Replace the test publishable key `PUBLISHABLE_KEY` in the index.html file with your pk\*live_xxx key which can be found here: https://dashboard.stripe.com/test/apikeys (!!!**NOTE**!!!: never paste in your secret key! For client-only Checkout only the publishable key is needed!)
 - Commit the changes to the `gh-pages` branch and push them to GitHub.
 - Done, you can now accept live payments on your GitHub pages \o/
+
+## More Checkout Samples
+
+- [checkout-one-time-payments](https://github.com/stripe-samples/checkout-one-time-payments)
+- [checkout-single-subscription](https://github.com/stripe-samples/checkout-single-subscription)
+- [checkout-subscription-and-add-on](https://github.com/stripe-samples/checkout-subscription-and-add-on)
+
+## FAQ
+
+Q: Why did you pick these frameworks?
+
+A: We chose the most minimal framework to convey the key Stripe calls and concepts you need to understand. These demos are meant as an educational tool that helps you roadmap how to integrate Stripe within your own system independent of the framework.
+
+Q: Can you show me how to build X?
+
+A: We are always looking for new recipe ideas, please email dev-samples@stripe.com with your suggestion!
+
+## Author(s)
+
+- [@adreyfus-stripe](https://twitter.com/adrind)
+- [@thorsten-stripe](https://twitter.com/thorwebdev)
