@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Stripe Payment Page Recipe</title>
-    <meta name="description" content="A demo of Stripe Payment Intents" />
+    <title>Stripe Checkout Sample</title>
+    <meta name="description" content="A demo of Stripe client-only Checkout" />
 
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/normalize.css" />
@@ -14,16 +14,22 @@
 
   <body>
     <div class="sr-root">
-      <div class="sr-main" style="display: flex;">
+      <div class="sr-main">
         <header class="sr-header">
           <div class="sr-header__logo"></div>
         </header>
-        <div class="sr-container">
-          <section class="container">
-            <h1>One-time Donation</h1>
-            <button data-sku-id="sku_foo">Donate $5.00 once</button>
-          </section>
-        </div>
+        <section class="container">
+          <h1>One-time Donation</h1>
+          <button data-sku-id="sku_GU4JYXyvvRb2sX">Donate $5.00</button>
+          <button data-sku-id="sku_GU4KO8nfdg8G2Z">Donate $15.00</button>
+          <button data-sku-id="sku_GU4LB0wBViiYsm">Donate $50.00</button>
+          <input type="number" name="amount" class="js-amount" id="amount" placeholder="Other amount"></input>
+          <button class="js-donate" data-sku-id="sku_HGVTCiLopfXurK">Donate $</button>
+        </section>
+        <section class="container">
+          <h1>Recurring Donation</h1>
+          <button data-plan-id="plan_GU4MXg0k0Uv1S6">Donate $20.00</button>
+        </section>
         <div id="error-message"></div>
       </div>
     </div>
@@ -31,7 +37,7 @@
       <span>
         This is a
         <a href="https://github.com/stripe-samples"> Stripe Sample </a> on how
-        to use Stripe Checkout on GitHub Pages.
+        to use the new Stripe Checkout to start a subscription.
         <a
           href="https://github.com/stripe-samples/github-pages-stripe-checkout"
         >
@@ -41,8 +47,19 @@
     </div>
 
     <script>
-      var PUBLISHABLE_KEY = "pk_test_foo";
+      // Replace with your own publishable key: https://dashboard.stripe.com/test/apikeys
+      var PUBLISHABLE_KEY = "pk_test_bI5YJUSyZgkUocI3uNa9bNMe00hdFhHQIU";
+      // Replace with the domain you want your users to be redirected back to after payment
+      var DOMAIN = location.href.replace(/[^/]*$/, "");
+
+      if (PUBLISHABLE_KEY === "pk_test_bI5YJUSyZgkUocI3uNa9bNMe00hdFhHQIU") {
+        console.log(
+          "Replace the hardcoded publishable key with your own publishable key: https://dashboard.stripe.com/test/apikeys"
+        );
+      }
+
       var stripe = Stripe(PUBLISHABLE_KEY);
+
       // Handle any errors from Checkout
       var handleResult = function(result) {
         if (result.error) {
@@ -51,13 +68,30 @@
         }
       };
 
+      var inputBox = document.querySelector('.js-amount');
+      var donate = document.querySelector('.js-donate');
+
+      inputBox.onkeyup = function(){
+          donate.textContent = `Donate $${inputBox.value}`;
+      }
+
       document.querySelectorAll("button").forEach(function(button) {
         button.addEventListener("click", function(e) {
+          var skuId = e.target.dataset.skuId;
+          var planId = e.target.dataset.planId;
+          var items = skuId
+            ? [{ sku: skuId, quantity: 1 }]
+            : [{ plan: planId, quantity: 1 }];
+
+          // Make the call to Stripe.js to redirect to the checkout page
+          // with the sku or plan ID.
           stripe
             .redirectToCheckout({
-              items: [{sku: 'sku_foo', quantity: 20}],
-              successUrl: 'https://foo.com/success',
-              cancelUrl: 'https://foo.com/canceld',
+              items: items,
+              successUrl:
+                DOMAIN + "success.html?session_id={CHECKOUT_SESSION_ID}",
+              cancelUrl:
+                DOMAIN + "canceled.html?session_id={CHECKOUT_SESSION_ID}"
             })
             .then(handleResult);
         });
