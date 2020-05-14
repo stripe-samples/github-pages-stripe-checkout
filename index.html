@@ -21,7 +21,9 @@
         <div class="sr-container">
           <section class="container">
             <h1>One-time Donation</h1>
-            <button data-sku-id="sku_foo">Donate $5.00 once</button>
+            <button data-sku-id="sku_GU4JYXyvvRb2sX">Donate $5.00</button>
+            <input type="number" name="amount" class="js-amount" id="amount" placeholder="Other amount"></input>
+          <button class="js-donate" data-sku-id="sku_HGVTCiLopfXurK">Donate $</button>
           </section>
         </div>
         <div id="error-message"></div>
@@ -41,7 +43,7 @@
     </div>
 
     <script>
-      var PUBLISHABLE_KEY = "pk_test_foo";
+      var PUBLISHABLE_KEY = "pk_test_bI5YJUSyZgkUocI3uNa9bNMe00hdFhHQIU";;
       var stripe = Stripe(PUBLISHABLE_KEY);
       // Handle any errors from Checkout
       var handleResult = function(result) {
@@ -50,14 +52,31 @@
           displayError.textContent = result.error.message;
         }
       };
+      
+      var inputBox = document.querySelector('.js-amount');
+      var donate = document.querySelector('.js-donate');
+
+      inputBox.onkeyup = function(){
+          donate.textContent = `Donate $${inputBox.value}`;
+      }
 
       document.querySelectorAll("button").forEach(function(button) {
         button.addEventListener("click", function(e) {
+          var skuId = e.target.dataset.skuId;
+          var planId = e.target.dataset.planId;
+          var items = skuId
+            ? [{ sku: skuId, quantity: 1 }]
+            : [{ plan: planId, quantity: 1 }];
+
+          // Make the call to Stripe.js to redirect to the checkout page
+          // with the sku or plan ID.
           stripe
             .redirectToCheckout({
-              items: [{sku: 'sku_foo', quantity: 20}],
-              successUrl: 'https://foo.com/success',
-              cancelUrl: 'https://foo.com/canceld',
+              items: items,
+              successUrl:
+                DOMAIN + "success.html?session_id={CHECKOUT_SESSION_ID}",
+              cancelUrl:
+                DOMAIN + "canceled.html?session_id={CHECKOUT_SESSION_ID}"
             })
             .then(handleResult);
         });
