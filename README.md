@@ -18,7 +18,13 @@ You can see this repository running on [GitHub Pages](https://pages.github.com/)
 
 Since these are all static assets you can serve them locally with a simple web server, e.g.
 
+Python 2
+
     python -m SimpleHTTPServer 8888
+    
+Python 3
+
+    python -m http.server 8888
 
 You can now view your page at http://localhost:8888
 
