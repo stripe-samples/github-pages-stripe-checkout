@@ -21,7 +21,7 @@ Since these are all static assets you can serve them locally with a simple web s
 Python 2
 
     python -m SimpleHTTPServer 8888
-    
+
 Python 3
 
     python -m http.server 8888
@@ -41,7 +41,6 @@ If you're getting an error running this command, see more detailed insturctions 
 
 - [checkout-one-time-payments](https://github.com/stripe-samples/checkout-one-time-payments)
 - [checkout-single-subscription](https://github.com/stripe-samples/checkout-single-subscription)
-- [checkout-subscription-and-add-on](https://github.com/stripe-samples/checkout-subscription-and-add-on)
 
 ## FAQ
 
